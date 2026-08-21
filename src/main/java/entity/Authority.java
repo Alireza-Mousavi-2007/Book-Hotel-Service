@@ -16,20 +16,20 @@ public class Authority implements GrantedAuthority {
 
     @Column(name = "authority_name", unique = true, nullable = false)
     @NotBlank(message = "Authority_name can't be blank")
-    private String Authority;
+    private String authority;
 
     public Authority() {
     }
 
+
     public Authority(String authority) {
-        Authority = authority;
+        this.authority = authority;
     }
 
     public Authority(Integer id, String authority) {
         this.id = id;
-        Authority = authority;
+        this.authority = authority;
     }
-
 
     public Integer getId() {
         return id;
@@ -41,10 +41,10 @@ public class Authority implements GrantedAuthority {
 
     @Override
     public @Nullable String getAuthority() {
-        return null;
+        return authority ;
     }
 
     public void setAuthority(String authority) {
-        Authority = authority;
+        this.authority = authority;
     }
 }

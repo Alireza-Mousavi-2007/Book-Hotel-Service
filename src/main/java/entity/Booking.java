@@ -1,20 +1,20 @@
 package entity;
 
-import enums.BookStatus;
+import enums.BookingStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
-public class Book {
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_user",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -22,7 +22,7 @@ public class Book {
     )
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_room",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -37,15 +37,15 @@ public class Book {
     private LocalDateTime endDate;
 
     @Column(name = "status")
-    private BookStatus status;
+    private BookingStatus status;
 
     @Column(name = "createdAt",nullable = false)
     private LocalDateTime createdAt;
 
-    public Book() {
+    public Booking() {
     }
 
-    public Book(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookStatus status, LocalDateTime createdAt) {
+    public Booking(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
         this.user = user;
         this.room = room;
         this.startDate = startDate;
@@ -54,7 +54,7 @@ public class Book {
         this.createdAt = createdAt;
     }
 
-    public Book(Integer id, User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookStatus status, LocalDateTime createdAt) {
+    public Booking(Integer id, User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
         this.id = id;
         this.user = user;
         this.room = room;
@@ -104,11 +104,11 @@ public class Book {
         this.endDate = endDate;
     }
 
-    public BookStatus getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(BookStatus status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     }
 

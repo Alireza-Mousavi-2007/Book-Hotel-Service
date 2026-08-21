@@ -1,6 +1,6 @@
 package enums;
 
-public enum BookStatus {
+public enum BookingStatus {
 
     PENDING,
     CONFIRMED,

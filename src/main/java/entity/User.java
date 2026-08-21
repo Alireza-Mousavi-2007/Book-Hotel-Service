@@ -29,11 +29,11 @@ public class User implements UserDetails {
     @Email(message = "must be in email format")
     private String email;
 
-    @Column(name = "user_password", unique = true, nullable = false)
+    @Column(name = "user_password",  nullable = false)
     @NotBlank(message = "password can't be blank")
     private String password;
 
-    @Column(name = "user_role", unique = true)
+    @Column(name = "user_role")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
