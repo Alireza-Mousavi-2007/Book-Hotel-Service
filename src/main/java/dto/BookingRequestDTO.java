@@ -1,77 +1,45 @@
-package entity;
+package dto;
 
+import entity.Room;
+import entity.User;
 import enums.BookingStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "books")
-public class Booking {
+public class BookingRequestDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
-    private Integer id;
-
-    private String bookingCode; //  برای رهگیری
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "book_user",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "book_room",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id")
-    )
     private Room room;
 
-    @Column(name = "startDate",nullable = false)
+    @Column(nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "endDate",nullable = false)
+    @Column(nullable = false)
     private LocalDateTime endDate;
 
-    @Column(name = "status")
     private BookingStatus status;
 
-    @Column(name = "createdAt",nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public Booking() {
+
+    public BookingRequestDTO() {
     }
 
-    public Booking(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
+    public BookingRequestDTO(User user, Room room) {
+        this.user = user;
+        this.room = room;
+    }
+
+    public BookingRequestDTO(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
         this.user = user;
         this.room = room;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.createdAt = createdAt;
-    }
-
-    public Booking(Integer id, User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
-        this.id = id;
-        this.user = user;
-        this.room = room;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-        this.createdAt = createdAt;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public User getUser() {
