@@ -14,6 +14,7 @@ public class Booking {
     @Column(name = "book_id")
     private Integer id;
 
+    @Column(name = "booking_code", nullable = false, unique = true)
     private String bookingCode; //  برای رهگیری
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,32 +33,31 @@ public class Booking {
     )
     private Room room;
 
-    @Column(name = "startDate",nullable = false)
+    @Column(name = "startDate", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "endDate",nullable = false)
+    @Column(name = "endDate", nullable = false)
     private LocalDateTime endDate;
 
     @Column(name = "status")
     private BookingStatus status;
 
-    @Column(name = "createdAt",nullable = false)
+    @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
 
     public Booking() {
     }
 
-    public Booking(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
+    public Booking(String bookingCode, User user, Room room, LocalDateTime startDate, LocalDateTime endDate) {
+        this.bookingCode = bookingCode;
         this.user = user;
         this.room = room;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
-        this.createdAt = createdAt;
     }
 
-    public Booking(Integer id, User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
-        this.id = id;
+    public Booking(String bookingCode, User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
+        this.bookingCode = bookingCode;
         this.user = user;
         this.room = room;
         this.startDate = startDate;
@@ -72,6 +72,14 @@ public class Booking {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getBookingCode() {
+        return bookingCode;
+    }
+
+    public void setBookingCode(String bookingCode) {
+        this.bookingCode = bookingCode;
     }
 
     public User getUser() {

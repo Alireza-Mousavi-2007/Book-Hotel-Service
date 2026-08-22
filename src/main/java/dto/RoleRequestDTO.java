@@ -11,13 +11,13 @@ public class RoleRequestDTO {
     private String role;
 
     @NotBlank(message = "authorities can't be empty")
-    private Set<Authority> authorities;
+    private Set<String> authorities;
 
     public RoleRequestDTO(String role) {
         this.role = role;
     }
 
-    public RoleRequestDTO(String role, Set<Authority> authorities) {
+    public RoleRequestDTO(String role, Set<String> authorities) {
         this.role = role;
         this.authorities = authorities;
     }
@@ -30,11 +30,11 @@ public class RoleRequestDTO {
         this.role = role;
     }
 
-    public Set<Authority> getAuthorities() {
+    public Set<String> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
+    public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
     }
 }

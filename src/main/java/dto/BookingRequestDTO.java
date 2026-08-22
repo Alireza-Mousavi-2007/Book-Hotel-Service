@@ -2,60 +2,48 @@ package dto;
 
 import entity.Room;
 import entity.User;
-import enums.BookingStatus;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 public class BookingRequestDTO {
 
-    private User user;
-
-    private Room room;
-
-    @Column(nullable = false)
+    private String bookingCode;
     private LocalDateTime startDate;
-
-    @Column(nullable = false)
     private LocalDateTime endDate;
-
-    private BookingStatus status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private Room room;
+    private User user;
 
 
     public BookingRequestDTO() {
     }
 
-    public BookingRequestDTO(User user, Room room) {
-        this.user = user;
-        this.room = room;
-    }
-
-    public BookingRequestDTO(User user, Room room, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status, LocalDateTime createdAt) {
-        this.user = user;
-        this.room = room;
+    public BookingRequestDTO(String bookingCode, LocalDateTime startDate, LocalDateTime endDate) {
+        this.bookingCode = bookingCode;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
-        this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
+    public BookingRequestDTO(String bookingCode, LocalDateTime startDate, LocalDateTime endDate, Room room) {
+        this.bookingCode = bookingCode;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
     }
 
-    public void setUser(User user) {
+    public BookingRequestDTO(String bookingCode, LocalDateTime startDate, LocalDateTime endDate, Room room, User user) {
+        this.bookingCode = bookingCode;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
         this.user = user;
     }
 
-    public Room getRoom() {
-        return room;
+    public String getBookingCode() {
+        return bookingCode;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setBookingCode(String bookingCode) {
+        this.bookingCode = bookingCode;
     }
 
     public LocalDateTime getStartDate() {
@@ -74,19 +62,19 @@ public class BookingRequestDTO {
         this.endDate = endDate;
     }
 
-    public BookingStatus getStatus() {
-        return status;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setStatus(BookingStatus status) {
-        this.status = status;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public User getUser() {
+        return user;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

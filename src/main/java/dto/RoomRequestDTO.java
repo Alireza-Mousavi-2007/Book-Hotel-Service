@@ -3,20 +3,20 @@ package dto;
 import enums.RoomStatus;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class RoomRequestDTO {
 
-    @Column(unique = true, nullable = false)
     @NotBlank(message = "room number can't be blank")
     private String roomNumber;
 
-    @Column(nullable = false)
+    @NotNull(message = "room price can't be null")
     private Long price;
 
-    @Column(nullable = false)
+    @NotNull(message = "room capacity can't be null")
     private Integer capacity;
 
-    @Column
+    @NotNull(message = "room status can't be null")
     private RoomStatus status;
 
     public RoomRequestDTO() {

@@ -15,5 +15,5 @@ public interface RoleService {
 
     public Role AddRole(RoleRequestDTO roleDTO);
 
-    public  void deleteRoleByName(String RoleNAme);
+    public  void deleteRoleByName(String roleName);
 }

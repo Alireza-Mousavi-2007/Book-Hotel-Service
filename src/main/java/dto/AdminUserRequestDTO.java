@@ -1,10 +1,15 @@
 package dto;
 
-import jakarta.persistence.Column;
+import entity.Role;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 
-public class UserRequestDTO {
+import java.util.Set;
+
+public class AdminUserRequestDTO {
 
     @NotBlank(message = "username can't be blank")
     private String username;
@@ -13,17 +18,19 @@ public class UserRequestDTO {
     @Email(message = "must be in email format")
     private String email;
 
-
     @NotBlank(message = "password can't be blank")
     private String password;
 
-    public UserRequestDTO() {
+    private Set<String> roles;
+
+    public AdminUserRequestDTO() {
     }
 
-    public UserRequestDTO(String username, String email, String password) {
+    public AdminUserRequestDTO(String username, String email, String password, Set<String> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
     public String getUsername() {
@@ -48,5 +55,13 @@ public class UserRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
