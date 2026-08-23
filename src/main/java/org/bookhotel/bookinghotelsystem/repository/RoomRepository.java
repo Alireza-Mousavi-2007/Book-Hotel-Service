@@ -1,5 +1,6 @@
 package org.bookhotel.bookinghotelsystem.repository;
 
+import org.bookhotel.bookinghotelsystem.dto.RoomRequestDTO;
 import org.bookhotel.bookinghotelsystem.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 

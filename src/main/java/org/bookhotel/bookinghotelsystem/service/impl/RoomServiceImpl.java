@@ -36,8 +36,10 @@ public class RoomServiceImpl implements RoomService {
     public Room getRoomByRoomNumber(String roomNumber) {
         var room = repo.findRoomByRoomNumber(roomNumber);
         if (room == null) throw new RoomNotFoundException("There's no room with = " + roomNumber);
-        else
+        else {
+            room.setId(null);
             return room;
+        }
     }
 
     @Override
