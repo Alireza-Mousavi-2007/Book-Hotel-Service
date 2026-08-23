@@ -11,7 +11,7 @@ public interface UserService extends UserDetailsService {
 
     public List<User> getAllUsers();
 
-    public User getUSerById(Integer id);
+    public User getUserById(Integer id);
 
     public User getByUsername(String username);
 
@@ -24,6 +24,8 @@ public interface UserService extends UserDetailsService {
     public User addUser(AdminUserRequestDTO adminUserRequestDTO);
 
     public void deleteUserByName(String username);
+
+    public boolean AreTheseForSameUser(String username , String email);
 
 
 }

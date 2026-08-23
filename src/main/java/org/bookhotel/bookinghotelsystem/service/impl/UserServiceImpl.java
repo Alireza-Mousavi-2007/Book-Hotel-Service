@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUSerById(Integer id) {
+    public User getUserById(Integer id) {
         var user = repo.findById(id);
         if (user.isEmpty()) throw new UserNotFoundException("there's no user with = " + id);
         else
@@ -98,6 +98,13 @@ public class UserServiceImpl implements UserService {
         else
             repo.delete(user);
 
+    }
+
+    @Override
+    public boolean AreTheseForSameUser(String username, String email) {
+        var user = getUserByEmail(email);
+        if (user == null) throw new UserNotFoundException("There's no user with email = " + email);
+        return user.getUsername() == username;
     }
 
     // for login : should be able to sign in with username and email
