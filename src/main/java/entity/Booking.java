@@ -40,6 +40,7 @@ public class Booking {
     private LocalDateTime endDate;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
     @Column(name = "createdAt", nullable = false)

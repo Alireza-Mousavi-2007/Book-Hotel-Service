@@ -34,3 +34,6 @@ build/
 ### properties ###
 application.properties
 application-dev.properties
+
+### extreaact codes###
+getCodes.bat

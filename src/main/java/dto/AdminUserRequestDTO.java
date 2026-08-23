@@ -5,20 +5,21 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Null;
 
 import java.util.Set;
 
 public class AdminUserRequestDTO {
 
-    @NotBlank(message = "username can't be blank")
+    @NotEmpty(message = "username can't be blank")
     private String username;
 
-    @NotBlank(message = "email can't be blank")
+    @NotEmpty(message = "email can't be blank")
     @Email(message = "must be in email format")
     private String email;
 
-    @NotBlank(message = "password can't be blank")
+    @NotEmpty(message = "password can't be blank")
     private String password;
 
     private Set<String> roles;

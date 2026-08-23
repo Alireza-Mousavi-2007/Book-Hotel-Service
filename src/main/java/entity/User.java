@@ -33,7 +33,6 @@ public class User implements UserDetails {
     @NotBlank(message = "password can't be blank")
     private String password;
 
-    @Column(name = "user_role")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",

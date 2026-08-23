@@ -15,7 +15,9 @@ public interface BookingService {
 
     public Booking addBooking(BookingRequestDTO bookingRequestDTO);
 
-    public void cancelBookingById(Integer id);
-
     public void cancelBookingByBookingCode(String bookingCode); // کد رندوم تولید کن موقع اضافه کردند رزرو تو کنترلر بهش بده
+
+    public String getAuthenticationName();
+
+    public String makeBookingCode();
 }

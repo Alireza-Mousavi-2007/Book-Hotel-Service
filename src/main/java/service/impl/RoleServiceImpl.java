@@ -5,6 +5,7 @@ import entity.Authority;
 import entity.Role;
 import exception.AuthorityNotFoundException;
 import exception.RoleNotFoundException;
+import org.springframework.stereotype.Service;
 import repository.RoleRepository;
 import service.AuthorityService;
 import service.RoleService;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository repo;
@@ -50,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role AddRole(RoleRequestDTO roleDTO) {
+    public Role addRole(RoleRequestDTO roleDTO) {
         var role = new Role();
         //TODO: check this later
         role.setRole(roleDTO.getRole());

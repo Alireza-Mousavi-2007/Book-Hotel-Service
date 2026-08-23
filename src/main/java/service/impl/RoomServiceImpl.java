@@ -4,11 +4,13 @@ import dto.RoomRequestDTO;
 import entity.Room;
 import enums.RoomStatus;
 import exception.RoomNotFoundException;
+import org.springframework.stereotype.Service;
 import repository.RoomRepository;
 import service.RoomService;
 
 import java.util.List;
 
+@Service
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository repo;

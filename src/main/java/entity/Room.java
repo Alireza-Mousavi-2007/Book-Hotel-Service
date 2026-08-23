@@ -24,6 +24,7 @@ public class Room {
     private Integer capacity;
 
     @Column(name = "room_status")
+    @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
     public Room() {

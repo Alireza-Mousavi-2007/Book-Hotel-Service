@@ -1,10 +1,11 @@
 package dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 public class AuthorityRequestDTO {
 
-    @NotBlank(message = "authority can't be empty")
+    @NotEmpty(message = "authority can't be empty")
     private String authority;
 
     public AuthorityRequestDTO() {

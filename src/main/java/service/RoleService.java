@@ -13,7 +13,7 @@ public interface RoleService {
 
     public Role getRoleById(Integer id);
 
-    public Role AddRole(RoleRequestDTO roleDTO);
+    public Role addRole(RoleRequestDTO roleDTO);
 
     public  void deleteRoleByName(String roleName);
 }

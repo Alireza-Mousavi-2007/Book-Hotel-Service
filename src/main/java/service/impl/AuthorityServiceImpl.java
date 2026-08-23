@@ -3,11 +3,12 @@ package service.impl;
 import dto.AuthorityRequestDTO;
 import entity.Authority;
 import exception.AuthorityNotFoundException;
+import org.springframework.stereotype.Service;
 import repository.AuthorityRepository;
 import service.AuthorityService;
 
 import java.util.List;
-
+@Service
 public class AuthorityServiceImpl implements AuthorityService {
 
     private final AuthorityRepository repo;

@@ -1,5 +1,6 @@
 package service.impl;
 
+import dto.AdminUserRequestDTO;
 import dto.UserRequestDTO;
 import entity.Role;
 import entity.User;
@@ -7,6 +8,7 @@ import exception.UserNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import repository.RoleRepository;
 import repository.UserRepository;
 import service.RoleService;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private final RoleService roleService;
@@ -52,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         var user = repo.findUserByEmail(email);
-        if(user==null)throw new UserNotFoundException("there's no user with = " + email);
+        if (user == null) throw new UserNotFoundException("there's no user with = " + email);
         else
             return user;
     }
@@ -65,13 +68,14 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRequestDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
 
-        var userRoles = roleService.getRoleByName("USER");
+        var userRoles = Set.of(roleService.getRoleByName("USER"));
+        user.setRoles(userRoles);
         return repo.save(user);
     }
 
     // for admin
     @Override
-    public User addUser(User user) {
+    public User addUser(AdminUserRequestDTO user) {
         var newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail());
@@ -79,12 +83,12 @@ public class UserServiceImpl implements UserService {
 
         //TODO: Check This
         Set<Role> roleSet = user.getRoles().stream()
-                .map(a -> roleService.getRoleByName(a.getRole()))
+                .map(a -> roleService.getRoleByName(a))
                 .collect(Collectors.toSet());
+
         newUser.setRoles(roleSet);
 
-
-        return repo.save(user);
+        return repo.save(newUser);
     }
 
     @Override
@@ -100,11 +104,11 @@ public class UserServiceImpl implements UserService {
     // for login : should be able to sign in with username and email
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        var user= repo.findUserByUsername(usernameOrEmail);
-        if (user == null) user=repo.findUserByEmail(usernameOrEmail);
-        if (user==null) throw new UserNotFoundException("there's no user with = " + usernameOrEmail);
+        var user = repo.findUserByUsername(usernameOrEmail);
+        if (user == null) user = repo.findUserByEmail(usernameOrEmail);
+        if (user == null) throw new UserNotFoundException("there's no user with = " + usernameOrEmail);
         else
 
-        return user;
+            return user;
     }
 }
