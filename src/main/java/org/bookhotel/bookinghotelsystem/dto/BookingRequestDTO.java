@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 public class BookingRequestDTO {
 
-    @NotEmpty(message = "bookingCode can't be empty")
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Room room;

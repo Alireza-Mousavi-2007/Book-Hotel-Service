@@ -40,10 +40,16 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking getBookingByBookingCode(String bookingCode) {
+    public BookingRequestDTO getBookingByBookingCode(String bookingCode) {
         var book = repo.findBookingByBookingCode(bookingCode);
         if (book == null) throw new BookingNotFoundException("there's no room with = " + bookingCode);
-        return book;
+
+        var bookDTO = new BookingRequestDTO();
+        bookDTO.setRoom(book.getRoom());
+        bookDTO.setEndDate(book.getEndDate());
+        bookDTO.setStartDate(book.getStartDate());
+
+        return bookDTO;
     }
 
     @Override
@@ -99,10 +105,10 @@ public class BookingServiceImpl implements BookingService {
         if (book == null)
             throw new BookingNotFoundException("there's no room with = " + bookingCode);
 
-        if(book.getStatus().equals(BookingStatus.CANCELLED))
+        if (book.getStatus().equals(BookingStatus.CANCELLED))
             throw new BookingConflictException("booking is already cancelled");
 
-        if (! book.getUser().getUsername().equals(getAuthenticationName()))
+        if (!book.getUser().getUsername().equals(getAuthenticationName()))
             throw new NoAccessException("you don't have access to this part");
 
         book.setStatus(BookingStatus.CANCELLED);

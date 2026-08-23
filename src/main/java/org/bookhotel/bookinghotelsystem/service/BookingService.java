@@ -9,7 +9,7 @@ public interface BookingService {
 
     public List<Booking> getAllBookings();
 
-    public Booking getBookingByBookingCode(String bookingCode);
+    public BookingRequestDTO getBookingByBookingCode(String bookingCode);
 
     public Booking getBookingById(Integer id);
 

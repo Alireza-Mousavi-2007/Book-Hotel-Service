@@ -25,7 +25,13 @@ public interface UserService extends UserDetailsService {
 
     public void deleteUserByName(String username);
 
-    public boolean AreTheseForSameUser(String username , String email);
+    public boolean AreTheseForSameUser(String username, String email);
+
+    public UserRequestDTO updateUserWithUsername(String username, UserRequestDTO userDTO);
+
+    public UserRequestDTO updateUserWithEmail(String email, UserRequestDTO userDTO);
+
+    public User updateUserWithUsernameByAdmin(String username, AdminUserRequestDTO userDTO);
 
 
 }

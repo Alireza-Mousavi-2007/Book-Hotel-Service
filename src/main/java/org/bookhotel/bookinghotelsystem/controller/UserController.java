@@ -2,6 +2,7 @@ package org.bookhotel.bookinghotelsystem.controller;
 
 import jakarta.validation.Valid;
 import org.bookhotel.bookinghotelsystem.dto.AdminUserRequestDTO;
+import org.bookhotel.bookinghotelsystem.dto.UserRequestDTO;
 import org.bookhotel.bookinghotelsystem.entity.User;
 import org.bookhotel.bookinghotelsystem.service.UserService;
 import org.springframework.http.MediaType;
@@ -39,23 +40,39 @@ public class UserController {
     }
 
     @GetMapping("/by-email/{email:.+}")
-    @PreAuthorize("hasRole('ADMIN') OR @userServiceImpl.AreTheseForSameUser(authentication.name,#Email)")
+    @PreAuthorize("hasRole('ADMIN') OR @userServiceImpl.AreTheseForSameUser(authentication.name,#email)")
     private User getUserByEmail(@Valid @PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    private User AddUSerByAdmin(AdminUserRequestDTO user){
+    private User AddUSerByAdmin(AdminUserRequestDTO user) {
         return userService.addUser(user);
     }
 
     @DeleteMapping
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
-    public void deleteUserByName(String username){
+    public void deleteUserByName(String username) {
         userService.deleteUserByName(username);
     }
 
-    
+    @PutMapping("/{username}")
+    @PreAuthorize("authentication.name==#username")
+    public UserRequestDTO updateUserWithUsername(@Valid @PathVariable String username, @Valid @RequestBody UserRequestDTO userDTO) {
+        return userService.updateUserWithUsername(username, userDTO);
+    }
+
+    @PutMapping("/by-email/{email:.+}")
+    @PreAuthorize("@userServiceImpl.AreTheseForSameUser(authentication.name,#email)")
+    public UserRequestDTO updateUserWithEmail(String email, UserRequestDTO userDTO) {
+        return userService.updateUserWithEmail(email, userDTO);
+    }
+
+    @PutMapping("/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public User updateUserWithUsernameByAdmin(String username, AdminUserRequestDTO userDTO) {
+        return userService.updateUserWithUsernameByAdmin(username, userDTO);
+    }
 
 }

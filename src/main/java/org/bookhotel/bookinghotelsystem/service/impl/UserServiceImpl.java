@@ -1,5 +1,6 @@
 package org.bookhotel.bookinghotelsystem.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.bookhotel.bookinghotelsystem.dto.AdminUserRequestDTO;
 import org.bookhotel.bookinghotelsystem.dto.UserRequestDTO;
 import org.bookhotel.bookinghotelsystem.entity.Role;
@@ -105,6 +106,52 @@ public class UserServiceImpl implements UserService {
         var user = getUserByEmail(email);
         if (user == null) throw new UserNotFoundException("There's no user with email = " + email);
         return user.getUsername() == username;
+    }
+
+    @Override
+    @Transactional
+    public UserRequestDTO updateUserWithUsername(String username, UserRequestDTO userDTO) {
+        var user = getByUsername(username);
+        if (user == null) throw new UserNotFoundException("There's no user with username = " + username);
+
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        repo.save(user);
+
+        return userDTO;
+    }
+
+    @Override
+    @Transactional
+    public UserRequestDTO updateUserWithEmail(String email, UserRequestDTO userDTO) {
+        var user = getUserByEmail(email);
+        if (user == null) throw new UserNotFoundException("There's no user with email = " + email);
+
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        repo.save(user);
+
+        return userDTO;
+    }
+
+    @Override
+    @Transactional
+    public User updateUserWithUsernameByAdmin(String username, AdminUserRequestDTO userDTO) {
+        var user = getByUsername(username);
+        if (user == null) throw new UserNotFoundException("There's no user with username = " + username);
+
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        var roles = userDTO.getRoles().stream()
+                .map(a -> roleService.getRoleByName(a))
+                .collect(Collectors.toSet());
+        return repo.save(user);
     }
 
     // for login : should be able to sign in with username and email

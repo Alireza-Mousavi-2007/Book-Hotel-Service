@@ -30,7 +30,7 @@ public class RoomController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room getRoomById(@Valid @RequestBody Integer id) {
+    public Room getRoomById(Integer id) {
         return roomService.getRoomById(id);
     }
 
@@ -42,13 +42,13 @@ public class RoomController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Room addRoom(RoomRequestDTO roomRequestDTO){
+    public Room addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO){
         return addRoom(roomRequestDTO);
     }
 
     @PutMapping("/{roomnumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room updateRoomStatus(String roomNumber, RoomStatus status){
+    public Room updateRoomStatus(@Valid @RequestBody String roomNumber, @Valid @RequestBody RoomStatus status){
        return roomService.updateRoomStatus(roomNumber,status);
     }
 
