@@ -76,8 +76,8 @@ public class BookingServiceImpl implements BookingService {
         if (repo.existsByRoomAndStatusAndStartDateBeforeAndEndDateAfter(
                 room,
                 BookingStatus.CONFIRMED,
-                bookingRequestDTO.getStartDate(),
-                bookingRequestDTO.getEndDate()
+                bookingRequestDTO.getEndDate(),
+                bookingRequestDTO.getStartDate()
         )) throw new BookingConflictException("you can't book this , it's already taken");
 
 

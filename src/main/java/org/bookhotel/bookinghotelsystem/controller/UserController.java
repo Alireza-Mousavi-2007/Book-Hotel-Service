@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name="Booking")
+@Tag(name="User")
 @RestController
 @RequestMapping(path = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @Operation(summary = "deleteByName")
-    @DeleteMapping("/{userName}")
+    @DeleteMapping("/{username}")
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
     public void deleteUserByName(@Valid @PathVariable String username) {
         userService.deleteUserByName(username);
