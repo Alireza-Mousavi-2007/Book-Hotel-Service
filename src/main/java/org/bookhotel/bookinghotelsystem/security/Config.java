@@ -81,7 +81,12 @@ public class Config {
     public SecurityFilterChain securityFilterChain(HttpSecurity security) {
         security.csrf(csrf -> csrf.disable());
         security.authorizeHttpRequests(sfc -> {
-            sfc.requestMatchers("/api/auth/**").permitAll();
+            sfc.requestMatchers(
+                    "/api/auth/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+            ).permitAll();
             //TODO: check other like swagger or etc
             sfc.anyRequest().authenticated();
         });

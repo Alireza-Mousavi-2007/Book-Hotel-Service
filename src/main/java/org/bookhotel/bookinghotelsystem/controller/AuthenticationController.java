@@ -1,5 +1,7 @@
 package org.bookhotel.bookinghotelsystem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.bookhotel.bookinghotelsystem.dto.LoginDTO;
 import org.bookhotel.bookinghotelsystem.dto.UserRequestDTO;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Authentication")
 @RestController
 @RequestMapping(path = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
@@ -28,6 +31,7 @@ public class AuthenticationController {
         this.userService = userService;
     }
 
+    @Operation(summary = "login")
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginDTO loginDTO) {
         var pocket = new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrEmail(), loginDTO.getPassword());
@@ -41,6 +45,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(Map.of("Token", token));
     }
 
+    @Operation(summary = "signup")
     @PostMapping("/signup")
     public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody UserRequestDTO userRequestDTO) {
 

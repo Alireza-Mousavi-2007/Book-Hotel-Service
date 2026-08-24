@@ -6,14 +6,14 @@ public class LoginDTO {
 
     @NotBlank(message = "username/password can;t be blank")
     private String usernameOrEmail;
-    private String Password;
+    private String password;
 
     public LoginDTO() {
     }
 
     public LoginDTO(String usernameOrEmail, String password) {
         this.usernameOrEmail = usernameOrEmail;
-        Password = password;
+        this.password = password;
     }
 
     public String getUsernameOrEmail() {
@@ -25,10 +25,10 @@ public class LoginDTO {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 }
