@@ -19,7 +19,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public List<Booking> getAllBookings() {
         return bookingService.getAllBookings();
@@ -31,19 +31,20 @@ public class BookingController {
         return bookingService.getBookingByBookingCode(bookingCode);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Booking getBookingById(@Valid @PathVariable Integer id) {
         return bookingService.getBookingById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('create')")
+    @PreAuthorize("hasAuthority('CREATE')")
     public Booking addBooking(@Valid @RequestBody BookingRequestDTO bookingRequestDTO) {
         return bookingService.addBooking(bookingRequestDTO);
     }
 
-    @PatchMapping("/{bookingCode}")
+    @PatchMapping("/{bookingCode}/cancel")
+    @PreAuthorize("hasAuthority('CANCEL')")
     public void cancelBookingByBookingCode(@Valid @PathVariable String bookingCode) {
         bookingService.cancelBookingByBookingCode(bookingCode);
     }

@@ -1,5 +1,6 @@
 package org.bookhotel.bookinghotelsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     @Email(message = "must be in email format")
     private String email;
 
+    @JsonIgnore
     @Column(name = "user_password",  nullable = false)
     @NotBlank(message = "password can't be blank")
     private String password;

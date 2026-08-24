@@ -22,15 +22,15 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public List<Room> getAllRoom() {
         return roomService.getAllRoom();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room getRoomById(Integer id) {
+    public Room getRoomById(@Valid @PathVariable Integer id) {
         return roomService.getRoomById(id);
     }
 
@@ -38,22 +38,22 @@ public class RoomController {
     @GetMapping("/{roomNumber}")
     @PreAuthorize("hasAuthority('READ')")
     public Room getRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
-        return getRoomByRoomNumber(roomNumber);
+        return roomService.getRoomByRoomNumber(roomNumber);
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public Room addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO) {
-        return addRoom(roomRequestDTO);
+        return roomService.addRoom(roomRequestDTO);
     }
 
-    @PutMapping("/{roomnumber}")
+    @PutMapping("/admin/{roomNumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room updateRoomStatus(@Valid @RequestBody String roomNumber, @Valid @RequestBody RoomStatus status) {
+    public Room updateRoomStatus(@Valid @PathVariable String roomNumber, @Valid @RequestBody RoomStatus status) {
         return roomService.updateRoomStatus(roomNumber, status);
     }
 
-    @DeleteMapping("/{roomnumber}")
+    @DeleteMapping("/admin/{roomNumber}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
         roomService.deleteRoomByRoomNumber(roomNumber);

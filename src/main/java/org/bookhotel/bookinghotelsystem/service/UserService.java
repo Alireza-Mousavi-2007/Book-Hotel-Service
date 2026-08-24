@@ -33,5 +33,6 @@ public interface UserService extends UserDetailsService {
 
     public User updateUserWithUsernameByAdmin(String username, AdminUserRequestDTO userDTO);
 
+    public boolean isExistByUsername(String username);
 
 }

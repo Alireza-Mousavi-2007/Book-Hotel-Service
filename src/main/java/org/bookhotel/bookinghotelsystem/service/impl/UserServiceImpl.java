@@ -105,14 +105,13 @@ public class UserServiceImpl implements UserService {
     public boolean AreTheseForSameUser(String username, String email) {
         var user = getUserByEmail(email);
         if (user == null) throw new UserNotFoundException("There's no user with email = " + email);
-        return user.getUsername() == username;
+        return user.getUsername().equals(username);
     }
 
     @Override
     @Transactional
     public UserRequestDTO updateUserWithUsername(String username, UserRequestDTO userDTO) {
         var user = getByUsername(username);
-        if (user == null) throw new UserNotFoundException("There's no user with username = " + username);
 
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
@@ -120,7 +119,7 @@ public class UserServiceImpl implements UserService {
 
         repo.save(user);
 
-        return userDTO;
+        return new UserRequestDTO(user.getUsername(), user.getEmail());
     }
 
     @Override
@@ -135,7 +134,7 @@ public class UserServiceImpl implements UserService {
 
         repo.save(user);
 
-        return userDTO;
+        return new UserRequestDTO(user.getUsername(), user.getEmail());
     }
 
     @Override
@@ -151,7 +150,14 @@ public class UserServiceImpl implements UserService {
         var roles = userDTO.getRoles().stream()
                 .map(a -> roleService.getRoleByName(a))
                 .collect(Collectors.toSet());
+
+        user.setRoles(roles);
         return repo.save(user);
+    }
+
+    @Override
+    public boolean isExistByUsername(String username) {
+        return repo.existsByUsername(username);
     }
 
     // for login : should be able to sign in with username and email

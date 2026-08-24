@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.bookhotel.bookinghotelsystem.exception.JwtVerifyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,12 +28,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        doBefore(request, response);
         filterChain.doFilter(request, response);
     }
 
     public void doBefore(HttpServletRequest request, HttpServletResponse response) {
         var header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header == null || !header.startsWith("bearer")) return;
+        if (header == null || !header.startsWith("Bearer ")) return;
         var token = header.substring("bearer".length()).trim();
         try {
             var verified = jwtToken.tokenVerifier(token);
@@ -51,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(auth);
         } catch (JWTVerificationException e) {
-            e.getMessage();
+            throw new JwtVerifyException(e.getMessage());
         }
     }
 }

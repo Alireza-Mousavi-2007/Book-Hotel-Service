@@ -21,13 +21,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     private List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     private User getUserById(@Valid @PathVariable Integer id) {
         return userService.getUserById(id);
@@ -45,13 +45,13 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping()
+    @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     private User AddUSerByAdmin(@Valid @RequestBody AdminUserRequestDTO user) {
         return userService.addUser(user);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{userName}")
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
     public void deleteUserByName(@Valid @PathVariable String username) {
         userService.deleteUserByName(username);
@@ -69,7 +69,7 @@ public class UserController {
         return userService.updateUserWithEmail(email, userDTO);
     }
 
-    @PutMapping("/{username}")
+    @PutMapping("/admin/{username}")
     @PreAuthorize("hasRole('ADMIN')")
     public User updateUserWithUsernameByAdmin(@Valid @PathVariable String username, @Valid @RequestBody AdminUserRequestDTO userDTO) {
         return userService.updateUserWithUsernameByAdmin(username, userDTO);
