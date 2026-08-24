@@ -36,25 +36,26 @@ public class RoomController {
 
 
     @GetMapping("/{roomNumber}")
-    public Room getRoomByRoomNumber(String roomNumber) {
+    @PreAuthorize("hasAuthority('READ')")
+    public Room getRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
         return getRoomByRoomNumber(roomNumber);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Room addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO){
+    public Room addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO) {
         return addRoom(roomRequestDTO);
     }
 
     @PutMapping("/{roomnumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room updateRoomStatus(@Valid @RequestBody String roomNumber, @Valid @RequestBody RoomStatus status){
-       return roomService.updateRoomStatus(roomNumber,status);
+    public Room updateRoomStatus(@Valid @RequestBody String roomNumber, @Valid @RequestBody RoomStatus status) {
+        return roomService.updateRoomStatus(roomNumber, status);
     }
 
     @DeleteMapping("/{roomnumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteRoomByRoomNumber(String roomNumber){
+    public void deleteRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
         roomService.deleteRoomByRoomNumber(roomNumber);
     }
 }

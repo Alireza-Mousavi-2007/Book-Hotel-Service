@@ -47,13 +47,13 @@ public class UserController {
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    private User AddUSerByAdmin(AdminUserRequestDTO user) {
+    private User AddUSerByAdmin(@Valid @RequestBody AdminUserRequestDTO user) {
         return userService.addUser(user);
     }
 
     @DeleteMapping
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
-    public void deleteUserByName(String username) {
+    public void deleteUserByName(@Valid @PathVariable String username) {
         userService.deleteUserByName(username);
     }
 
@@ -65,13 +65,13 @@ public class UserController {
 
     @PutMapping("/by-email/{email:.+}")
     @PreAuthorize("@userServiceImpl.AreTheseForSameUser(authentication.name,#email)")
-    public UserRequestDTO updateUserWithEmail(String email, UserRequestDTO userDTO) {
+    public UserRequestDTO updateUserWithEmail(@Valid @PathVariable String email, @Valid @RequestBody UserRequestDTO userDTO) {
         return userService.updateUserWithEmail(email, userDTO);
     }
 
     @PutMapping("/{username}")
     @PreAuthorize("hasRole('ADMIN')")
-    public User updateUserWithUsernameByAdmin(String username, AdminUserRequestDTO userDTO) {
+    public User updateUserWithUsernameByAdmin(@Valid @PathVariable String username, @Valid @RequestBody AdminUserRequestDTO userDTO) {
         return userService.updateUserWithUsernameByAdmin(username, userDTO);
     }
 

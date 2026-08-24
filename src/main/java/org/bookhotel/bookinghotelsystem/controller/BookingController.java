@@ -27,13 +27,13 @@ public class BookingController {
 
     @GetMapping("/{bookingCode}")
     @PreAuthorize("hasAuthority('READ')")
-    public BookingRequestDTO getBookingByBookingCode(String bookingCode) {
+    public BookingRequestDTO getBookingByBookingCode(@Valid @PathVariable String bookingCode) {
         return bookingService.getBookingByBookingCode(bookingCode);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Booking getBookingById(Integer id) {
+    public Booking getBookingById(@Valid @PathVariable Integer id) {
         return bookingService.getBookingById(id);
     }
 
@@ -44,7 +44,7 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingCode}")
-    public void cancelBookingByBookingCode(String bookingCode) {
+    public void cancelBookingByBookingCode(@Valid @PathVariable String bookingCode) {
         bookingService.cancelBookingByBookingCode(bookingCode);
     }
 
