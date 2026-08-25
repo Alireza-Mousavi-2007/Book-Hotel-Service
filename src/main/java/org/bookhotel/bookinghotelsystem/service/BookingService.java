@@ -20,4 +20,6 @@ public interface BookingService {
     public String getAuthenticationName();
 
     public String makeBookingCode();
+
+    public String getUsernameWithBookingCode(String bookingCode);
 }

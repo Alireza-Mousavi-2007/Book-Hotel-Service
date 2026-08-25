@@ -31,7 +31,7 @@ public class BookingController {
 
     @Operation(summary = "getByBookingCode")
     @GetMapping("/{bookingCode}")
-    @PreAuthorize("hasAuthority('READ')")
+    @PreAuthorize("hasAuthority('READ') or @bookingServiceImpl.getUsernameWithBookingCode(#bookingCode)==authentication.name")
     public BookingRequestDTO getBookingByBookingCode(@Valid @PathVariable String bookingCode) {
         return bookingService.getBookingByBookingCode(bookingCode);
     }

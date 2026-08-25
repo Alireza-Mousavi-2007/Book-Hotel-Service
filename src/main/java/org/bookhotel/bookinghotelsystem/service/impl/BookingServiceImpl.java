@@ -8,6 +8,7 @@ import org.bookhotel.bookinghotelsystem.exception.BookingConflictException;
 import org.bookhotel.bookinghotelsystem.exception.BookingNotFoundException;
 import org.bookhotel.bookinghotelsystem.exception.NoAccessException;
 import jakarta.transaction.Transactional;
+import org.bookhotel.bookinghotelsystem.exception.RoomNotFoundException;
 import org.bookhotel.bookinghotelsystem.service.BookingService;
 import org.bookhotel.bookinghotelsystem.service.RoomService;
 import org.bookhotel.bookinghotelsystem.service.UserService;
@@ -64,6 +65,9 @@ public class BookingServiceImpl implements BookingService {
     public Booking addBooking(BookingRequestDTO bookingRequestDTO) {
         var book = new Booking();
         var room = bookingRequestDTO.getRoom();
+
+        if (bookingRequestDTO.getRoom() == null || bookingRequestDTO.getRoom().getId() == null)
+            throw new RoomNotFoundException("room id is required");
 
         //control time validation
         if (bookingRequestDTO.getStartDate().isAfter(bookingRequestDTO.getEndDate()))
@@ -126,6 +130,13 @@ public class BookingServiceImpl implements BookingService {
         String random = UUID.randomUUID().toString().substring(0, 5);
 
         return "HTL-" + date + "-" + random;
+    }
+
+    @Override
+    public String getUsernameWithBookingCode(String bookingCode) {
+        var username = repo.findBookingByBookingCode(bookingCode).getUser().getUsername();
+        if (username == null) throw new BookingNotFoundException("there's no room with = " + bookingCode);
+        return username;
     }
 
 
