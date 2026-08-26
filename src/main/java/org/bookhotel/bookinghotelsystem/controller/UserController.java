@@ -80,7 +80,7 @@ public class UserController {
         return userService.updateUserWithEmail(email, userDTO);
     }
 
-    @Operation(summary = "UpdateWithUserNAmeByAdmin")
+    @Operation(summary = "UpdateWithUserNameByAdmin")
     @PutMapping("/admin/{username}")
     @PreAuthorize("hasRole('ADMIN')")
     public User updateUserWithUsernameByAdmin(@Valid @PathVariable String username, @Valid @RequestBody AdminUserRequestDTO userDTO) {
