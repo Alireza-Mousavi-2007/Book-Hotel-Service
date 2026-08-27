@@ -2,7 +2,7 @@
 
 A hotel room booking backend built with **Spring Boot**, featuring **JWT**-based authentication and a Role/Authority access control model. Users can browse rooms and create bookings; admins manage users, rooms, and all bookings.
 
-> 🤖 **Note:** This README was drafted with the help of AI (Claude), based on a full review of the project's source code.
+> 🤖 **Note :** This README was drafted with the help of AI (Claude), based on a full review of the project's source code.
 
 ---
 
