@@ -1,5 +1,8 @@
 package org.bookhotel.bookinghotelsystem.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.bookhotel.bookinghotelsystem.enums.BookingStatus;
 import jakarta.persistence.*;
 
@@ -7,6 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
 
     @Id
@@ -46,8 +52,7 @@ public class Booking {
     @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
 
-    public Booking() {
-    }
+
 
     public Booking(String bookingCode, User user, Room room, LocalDateTime startDate, LocalDateTime endDate) {
         this.bookingCode = bookingCode;

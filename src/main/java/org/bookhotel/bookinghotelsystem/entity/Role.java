@@ -1,9 +1,11 @@
 package org.bookhotel.bookinghotelsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Set;
 
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role {

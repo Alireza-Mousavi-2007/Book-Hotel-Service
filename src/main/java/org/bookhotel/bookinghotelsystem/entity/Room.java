@@ -1,11 +1,13 @@
 package org.bookhotel.bookinghotelsystem.entity;
 
+import lombok.Builder;
 import org.bookhotel.bookinghotelsystem.enums.RoomStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "rooms")
+@Builder
 public class Room {
 
     @Id

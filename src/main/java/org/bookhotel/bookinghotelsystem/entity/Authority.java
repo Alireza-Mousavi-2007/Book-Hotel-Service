@@ -2,9 +2,10 @@ package org.bookhotel.bookinghotelsystem.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
-
+@Builder
 @Entity
 @Table(name = "authorities")
 public class Authority implements GrantedAuthority {
