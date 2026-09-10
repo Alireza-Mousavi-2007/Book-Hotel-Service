@@ -2,9 +2,10 @@ package org.bookhotel.bookinghotelsystem.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 
 import java.util.Set;
-
+@Builder
 public class AdminUserRequestDTO {
 
     @NotEmpty(message = "username can't be blank")

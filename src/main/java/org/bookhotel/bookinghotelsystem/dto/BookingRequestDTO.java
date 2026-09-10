@@ -1,10 +1,11 @@
 package org.bookhotel.bookinghotelsystem.dto;
 
+import lombok.Builder;
 import org.bookhotel.bookinghotelsystem.entity.Room;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
-
+@Builder
 public class BookingRequestDTO {
 
     private LocalDateTime startDate;

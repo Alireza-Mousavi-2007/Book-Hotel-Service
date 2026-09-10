@@ -1,9 +1,10 @@
 package org.bookhotel.bookinghotelsystem.dto;
 
+import lombok.Builder;
 import org.bookhotel.bookinghotelsystem.enums.RoomStatus;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
+@Builder
 public class RoomRequestDTO {
 
     @NotEmpty(message = "room number can't be blank")
