@@ -8,13 +8,15 @@ import org.bookhotel.bookinghotelsystem.dto.RoomRequestDTO;
 import org.bookhotel.bookinghotelsystem.entity.Room;
 import org.bookhotel.bookinghotelsystem.enums.RoomStatus;
 import org.bookhotel.bookinghotelsystem.service.RoomService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name ="Room")
+@Tag(name = "Room")
 @RestController()
 @RequestMapping(path = "/api/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RoomController {
@@ -28,42 +30,48 @@ public class RoomController {
     @Operation(summary = "getAllRoom")
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Room> getAllRoom() {
-        return roomService.getAllRoom();
+    public ResponseEntity<List<Room>> getAllRoom() {
+        var rooms = roomService.getAllRoom();
+        return ResponseEntity.status(HttpStatus.FOUND).body(rooms);
     }
 
     @Operation(summary = "GetById")
     @GetMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room getRoomById(@Valid @PathVariable Integer id) {
-        return roomService.getRoomById(id);
+    public ResponseEntity<Room> getRoomById(@Valid @PathVariable Integer id) {
+        var room=roomService.getRoomById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(roomService.getRoomById(id));
     }
 
     @Operation(summary = "GetByRoomNumber")
     @GetMapping("/{roomNumber}")
     @PreAuthorize("hasAuthority('READ')")
-    public Room getRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
-        return roomService.getRoomByRoomNumber(roomNumber);
+    public ResponseEntity<Room> getRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
+        var room=roomService.getRoomByRoomNumber(roomNumber);
+        return ResponseEntity.status(HttpStatus.FOUND).body(room);
     }
 
     @Operation(summary = "AddRoomByAdmin")
     @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO) {
-        return roomService.addRoom(roomRequestDTO);
+    public ResponseEntity<Room> addRoom(@Valid @RequestBody RoomRequestDTO roomRequestDTO) {
+        var room=roomService.addRoom(roomRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(room) ;
     }
 
     @Operation(summary = "updateRoomStatus")
     @PutMapping("/admin/{roomNumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Room updateRoomStatus(@Valid @PathVariable String roomNumber, @Valid @RequestBody RoomStatus status) {
-        return roomService.updateRoomStatus(roomNumber, status);
+    public ResponseEntity<Room> updateRoomStatus(@Valid @PathVariable String roomNumber, @Valid @RequestBody RoomStatus status) {
+        var room =roomService.updateRoomStatus(roomNumber, status);
+        return  ResponseEntity.status(HttpStatus.OK).body(room);
     }
 
     @Operation(summary = "deleteByRoomNumber")
     @DeleteMapping("/admin/{roomNumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
+    public ResponseEntity<String> deleteRoomByRoomNumber(@Valid @PathVariable String roomNumber) {
         roomService.deleteRoomByRoomNumber(roomNumber);
+        return ResponseEntity.status(HttpStatus.OK).body("room "+roomNumber+" deleted");
     }
 }

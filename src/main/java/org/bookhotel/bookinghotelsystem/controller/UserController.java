@@ -3,17 +3,20 @@ package org.bookhotel.bookinghotelsystem.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 import org.bookhotel.bookinghotelsystem.dto.AdminUserRequestDTO;
 import org.bookhotel.bookinghotelsystem.dto.UserRequestDTO;
 import org.bookhotel.bookinghotelsystem.entity.User;
 import org.bookhotel.bookinghotelsystem.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name="User")
+@Tag(name = "User")
 @RestController
 @RequestMapping(path = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -27,64 +30,75 @@ public class UserController {
     @Operation(summary = "getAll")
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        var rooms = userService.getAllUsers();
+        return ResponseEntity.status(HttpStatus.FOUND).body(rooms);
     }
 
     @Operation(summary = "getById")
     @GetMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public User getUserById(@Valid @PathVariable Integer id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@Valid @PathVariable Integer id) {
+        var user = userService.getUserById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(user);
     }
 
     @Operation(summary = "getByUsername")
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
-    public User getUserByUsername(@Valid @PathVariable String username) {
-        return userService.getByUsername(username);
+    public ResponseEntity<User> getUserByUsername(@Valid @PathVariable String username) {
+        var user = userService.getByUsername(username);
+        return ResponseEntity.status(HttpStatus.FOUND).body(user);
     }
 
     @Operation(summary = "getByEmail")
     @GetMapping("/by-email/{email:.+}")
     @PreAuthorize("hasRole('ADMIN') OR @userServiceImpl.AreTheseForSameUser(authentication.name,#email)")
-    public User getUserByEmail(@Valid @PathVariable String email) {
-        return userService.getUserByEmail(email);
+    public ResponseEntity<User> getUserByEmail(@Valid @PathVariable String email) {
+        var user = userService.getUserByEmail(email);
+        return ResponseEntity.status(HttpStatus.FOUND).body(user);
     }
 
     @Operation(summary = "addByAdmin")
     @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public User AddUSerByAdmin(@Valid @RequestBody AdminUserRequestDTO user) {
-        return userService.addUser(user);
+    public ResponseEntity<User> AddUSerByAdmin(@Valid @RequestBody AdminUserRequestDTO user) {
+        var addedUser = userService.addUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
     }
 
     @Operation(summary = "deleteByName")
     @DeleteMapping("/{username}")
     @PreAuthorize("hasRole('ADMIN') OR authentication.name==#username")
-    public void deleteUserByName(@Valid @PathVariable String username) {
+    public ResponseEntity<String> deleteUserByName(@Valid @PathVariable String username) {
         userService.deleteUserByName(username);
+        return ResponseEntity.status(HttpStatus.OK).body("user " + username + " deleted");
     }
 
     @Operation(summary = "updateWithUsername")
     @PutMapping("/{username}")
     @PreAuthorize("authentication.name==#username")
-    public UserRequestDTO updateUserWithUsername(@Valid @PathVariable String username, @Valid @RequestBody UserRequestDTO userDTO) {
-        return userService.updateUserWithUsername(username, userDTO);
+    public ResponseEntity<UserRequestDTO> updateUserWithUsername(@Valid @PathVariable String username, @Valid @RequestBody UserRequestDTO userDTO) {
+        var user = userService.updateUserWithUsername(username, userDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @Operation(summary = "updateWithEmail")
     @PutMapping("/by-email/{email:.+}")
     @PreAuthorize("@userServiceImpl.AreTheseForSameUser(authentication.name,#email)")
-    public UserRequestDTO updateUserWithEmail(@Valid @PathVariable String email, @Valid @RequestBody UserRequestDTO userDTO) {
-        return userService.updateUserWithEmail(email, userDTO);
+    public ResponseEntity<UserRequestDTO> updateUserWithEmail(@Valid @PathVariable String email,
+                                                              @Valid @RequestBody UserRequestDTO userDTO) {
+        var user = userService.updateUserWithEmail(email, userDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @Operation(summary = "UpdateWithUserNameByAdmin")
     @PutMapping("/admin/{username}")
     @PreAuthorize("hasRole('ADMIN')")
-    public User updateUserWithUsernameByAdmin(@Valid @PathVariable String username, @Valid @RequestBody AdminUserRequestDTO userDTO) {
-        return userService.updateUserWithUsernameByAdmin(username, userDTO);
+    public ResponseEntity<User> updateUserWithUsernameByAdmin(@Valid @PathVariable String username,
+                                                              @Valid @RequestBody AdminUserRequestDTO userDTO) {
+        var user = userService.updateUserWithUsernameByAdmin(username, userDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
 }

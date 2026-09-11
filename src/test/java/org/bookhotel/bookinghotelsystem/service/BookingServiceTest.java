@@ -63,13 +63,13 @@ public class BookingServiceTest {
 
     }
 
-    //TODO:debug this
+
     @Test
     public void addBooking_whenAdded_booking() {
         when(userService.getByUsername(anyString())).thenReturn(user);
         when(bookingRepository.existsByRoomAndStatusAndStartDateBeforeAndEndDateAfter(
-                booking.getRoom(), booking.getStatus(), booking.getEndDate(), booking.getStartDate()
-        )).thenReturn(true);
+                any(), any(),any(), any()
+        )).thenReturn(false);
         when(roomService.getRoomById(anyInt())).thenReturn(room);
         when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
 
